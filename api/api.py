@@ -48,14 +48,16 @@ def addUser():
 	
 	return ("Usuario cadastrado com sucesso!")
 
+@app.route('/user/<int:cpf>')
+def userBycpf(cpf):
+	usuarios = buscaUsuarios()
+	for i in usuarios:
+		if i["cpf"] == cpf:
+			return jsonify(i)
+	
+
 
 	
 if __name__ == '__main__':
 	app.run()
 	
-
-
-
-
-
-    

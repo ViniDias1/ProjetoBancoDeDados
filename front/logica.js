@@ -9,11 +9,13 @@ $(document).ready(function() {
 function exibirUsuarios(data) {
   let userList = $('#userList');
   userList.empty();
-
-  data.forEach(function(usuario) {
-    let li = $('<li>').text('CPF: ' + usuario.cpf + ' - Nome: ' + usuario.nome + ' - Data de Nascimento: ' + usuario.data_nascimento);
+  
+  for (dados in data){
+    dados = data[dados]
+    let li = $('<li>').text('CPF: ' + dados.cpf + ' - Nome: ' + dados.nome + ' - Data de Nascimento: ' + dados.data_nascimento);
     userList.append(li);
-  });
+  }
+
 }
 
 function limparCampos() {
@@ -54,4 +56,3 @@ function cadastrarUsuario() {
     }
   });
 }
-

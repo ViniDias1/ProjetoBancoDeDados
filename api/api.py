@@ -29,20 +29,27 @@ def salvarUsuario(usuarios):
 def allUsers():
 
 	usuarios = buscaUsuarios()
-	return jsonify(usuarios)
+	return jsonify(usuarios[0])
 
 
 @app.route('/addUser', methods=['POST'])
 def addUser():
 	requisicao = request.get_json()
-
+	cpf = requisicao["cpf"]
 	novoUsuario = {
-        "cpf": requisicao["cpf"],
-        "nome": requisicao["nome"],
-        "data_nascimento": requisicao["data_nascimento"]
+
+			"cpf": requisicao["cpf"],
+			"nome": requisicao["nome"],
+			"data_nascimento": requisicao["data_nascimento"]
+
+        
     }
 	usuarios = buscaUsuarios()
-	usuarios.append(novoUsuario)
+	try:
+		usuarios[0][cpf] = novoUsuario
+	except IndexError:
+		usuarios.append({cpf:novoUsuario})
+	
 
 	salvarUsuario(usuarios)
 	
@@ -51,9 +58,8 @@ def addUser():
 @app.route('/user/<int:cpf>')
 def userBycpf(cpf):
 	usuarios = buscaUsuarios()
-	for i in usuarios:
-		if i["cpf"] == cpf:
-			return jsonify(i)
+	cpf = str(cpf)
+	return jsonify(usuarios[0][cpf])
 	
 
 

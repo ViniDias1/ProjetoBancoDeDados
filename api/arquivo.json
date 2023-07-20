@@ -1,52 +1,24 @@
 [
     {
-        "cpf": 4198,
-        "nome": "b",
-        "data_nascimento": "11/03/1923"
-    },
-    {
-        "cpf": 511,
-        "nome": "Vincius",
-        "data_nascimento": "05/12/2002"
-    },
-    {
-        "cpf": 88,
-        "nome": "C",
-        "data_nascimento": "12/03/1999"
-    },
-    {
-        "cpf": 444,
-        "nome": "testeFRONT",
-        "data_nascimento": "DATATESTE"
-    },
-    {
-        "cpf": 15699,
-        "nome": "maisUM",
-        "data_nascimento": "12/07/2023"
-    },
-    {
-        "cpf": 55,
-        "nome": "maisDOIS",
-        "data_nascimento": "12/07/1999"
-    },
-    {
-        "cpf": 99999,
-        "nome": "SIMONE DIAS",
-        "data_nascimento": "01/01/2001"
-    },
-    {
-        "cpf": 95198198,
-        "nome": "VAMOVER",
-        "data_nascimento": "18/12/1978"
-    },
-    {
-        "cpf": 6666,
-        "nome": "ULTIMO",
-        "data_nascimento": "03/03/2003"
-    },
-    {
-        "cpf": 55555,
-        "nome": "Joao",
-        "data_nascimento": "05/11/2003"
+        "666": {
+            "cpf": 666,
+            "nome": "SIMONE DIAS",
+            "data_nascimento": "05/12/2002"
+        },
+        "222": {
+            "cpf": 222,
+            "nome": "Vin\u00edcius",
+            "data_nascimento": "05/12/2002"
+        },
+        "999": {
+            "cpf": 999,
+            "nome": "teste",
+            "data_nascimento": "05/12/2002"
+        },
+        "111": {
+            "cpf": 111,
+            "nome": "outroTESTE",
+            "data_nascimento": "05/12/1955"
+        }
     }
 ]

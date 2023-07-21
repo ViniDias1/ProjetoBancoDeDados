@@ -10,19 +10,28 @@
 </head>
 <body>
   <div class="container">
-    <div id="Lista">
+
+    <div class="section userFormSection">
+      <h2>Cadastro de Usuário</h2>
+      <input id="nome" type="text" class="form-input" placeholder="Nome">
+      <input id="cpf" type="text" class="form-input" placeholder="CPF">
+      <input id="dataNascimento" type="text" class="form-input" placeholder="Data de Nascimento">
+      <button id="btnCadastrar" class="form-button">Cadastrar</button>
+    </div>
+
+
+    <div class="section userSearchSection">
+      <h2>Pesquisar Usuário por CPF</h2>
+      <input id="cpfPesquisa" type="text" class="form-input" placeholder="Digite o CPF">
+      <button id="btnPesquisar" class="form-button">Pesquisar</button>
+      <p id="userCPF"></p>
+    </div>
+
+    <div class="section userListSection scrollable-list">
       <h1>Lista de Usuários</h1>
       <ul id="userList"></ul>
     </div>
-    
-    <div class="form-container">
-      <h2>Cadastro de Usuário</h2>
-      <input id = "nome" type="text" class="form-input" placeholder="Nome">
-      <input id = "cpf" type="text" class="form-input" placeholder="CPF">
-      <input id = "dataNascimento" type="text" class="form-input" placeholder="Data de Nascimento">
-      <button id="btnCadastrar" class="form-button">Cadastrar</button>
-    </div>
-    
+
   </div>
 </body>
 </html>

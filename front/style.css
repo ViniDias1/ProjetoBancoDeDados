@@ -1,3 +1,4 @@
+/* style.css */
 body {
   font-family: 'Arial', sans-serif;
   background-color: #0f0730;
@@ -5,33 +6,49 @@ body {
   padding: 0;
 }
 
+p{
+  padding: 10px;
+}
+
 .container {
-  max-width: 800px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.section {
+  flex: 1;
+  margin-bottom: 20px;
+  padding: 20px;
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.userListSection {
+  height: 300px;
+  overflow: auto;
+  margin: 40px;
+}
+
+.userFormSection,
+.userSearchSection {
+  width: 100%;
+  margin: 40px;
   display: flex;
-  justify-content: space-between;
-  flex-direction: column-reverse;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-around;
   align-items: center;
-  flex-wrap: nowrap;
 }
 
-.user-list {
-  flex: 2;
-  padding-right: 20px;
-}
-
-.user-form {
-  flex: 1;
-}
-
-h1 {
+h1, h2 {
   text-align: center;
   color: #333;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 ul {
@@ -49,8 +66,7 @@ li {
 }
 
 li:hover {
-  background-color: #a7cdf9;
-  
+  background-color: #62f696;
 }
 
 li::before {
@@ -62,27 +78,18 @@ li::before {
   margin-left: -1em;
 }
 
-.form-container {
-  width: 100%;
-}
-
 .form-input {
   margin-bottom: 10px;
-  width: 97%;
+  width: 100%;
   padding: 10px;
   border: 2px solid #565050;
   border-radius: 5px;
 }
 
-/* .form-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #414040;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-} */
+.scrollable-list {
+  margin-top: 20px;
+  overflow: auto;
+}
 
 .form-button {
   width: 100%;
@@ -100,4 +107,3 @@ li::before {
   background-color: #62f696;
   color: black;
 }
-

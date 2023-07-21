@@ -4,9 +4,21 @@ $(document).ready(function() {
   $('#btnCadastrar').click(function() {
     cadastrarUsuario();
   });
+
+  $('#btnPesquisar').click(function() {
+    pesquisarUsuarioPorCPF(parseInt($('#cpfPesquisa').val()));
+  });
 });
 
-function exibirUsuarios(data) {
+function exibirUsuarios(data,diff) {
+
+  if (diff == 1){
+
+    let userCPF = $('#userCPF');
+    userCPF.empty();
+    userCPF.append('CPF: ' + data.cpf + ' - Nome: ' + data.nome + ' - Data de Nascimento: ' + data.data_nascimento);
+    return;
+  }
   let userList = $('#userList');
   userList.empty();
   
@@ -26,7 +38,13 @@ function limparCampos() {
 
 function carregarUsuarios() {
   $.get("http://localhost:5000/allUsers", function(data) {
-    exibirUsuarios(data);
+    exibirUsuarios(data,0);
+  });
+}
+
+function pesquisarUsuarioPorCPF(cpf) {
+  $.get("http://localhost:5000/user/" + cpf, function(data) {
+    exibirUsuarios(data,1);
   });
 }
 

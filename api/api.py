@@ -2,15 +2,13 @@
 
 from flask import Flask, jsonify, request
 import json
-from flask_cors import CORS # PARA TESTE COM FRONT END
-
 
 app = Flask(__name__)
-CORS(app,resources={r"/*": {"origins": "*"}}) # PARA TESTE COM FRONT END
+
 
 def buscaUsuarios():
 	try:
-		with open("api/arquivo.json", 'r') as arquivo:
+		with open("arquivo.json", 'r') as arquivo:
 			try:
 				return json.load(arquivo)
 			except json.JSONDecodeError:	
@@ -21,7 +19,7 @@ def buscaUsuarios():
 
 
 def salvarUsuario(usuarios):
-	with open("api/arquivo.json", 'w') as arquivo:
+	with open("arquivo.json", 'w') as arquivo:
 		json.dump(usuarios, arquivo, indent=4)
 		
 
@@ -35,14 +33,13 @@ def allUsers():
 @app.route('/addUser', methods=['POST'])
 def addUser():
 	requisicao = request.get_json()
-	cpf = requisicao["cpf"]
+	cpf = requisicao[0]["cpf"]
 	novoUsuario = {
 
-			"cpf": requisicao["cpf"],
-			"nome": requisicao["nome"],
-			"data_nascimento": requisicao["data_nascimento"]
+			"cpf": requisicao[0]["cpf"],
+			"nome": requisicao[0]["nome"],
+			"data_nascimento": requisicao[0]["data_nascimento"]
 
-        
     }
 	usuarios = buscaUsuarios()
 	try:
@@ -57,9 +54,12 @@ def addUser():
 
 @app.route('/user/<int:cpf>')
 def userBycpf(cpf):
-	usuarios = buscaUsuarios()
-	cpf = str(cpf)
-	return jsonify(usuarios[0][cpf])
+	try:
+		usuarios = buscaUsuarios()
+		cpf = str(cpf)
+		return jsonify(usuarios[0][cpf])
+	except KeyError:
+		return (f"Usuario com o cpf |{cpf}| nao foi encontrado.")
 	
 
 

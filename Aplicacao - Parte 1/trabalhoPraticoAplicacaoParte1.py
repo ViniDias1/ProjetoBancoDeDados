@@ -1,5 +1,6 @@
 
 import mysql.connector
+from random import randint
 
 conexao = mysql.connector.connect(
     host = "viniemarcelodb-mysql.cor5ekoknnbw.us-east-1.rds.amazonaws.com",
@@ -10,44 +11,48 @@ conexao = mysql.connector.connect(
 
 cursor = conexao.cursor()
 
+
 def consultaTabela(tabela):
     sqlComando = f"SELECT * FROM {tabela}"
     cursor.execute(sqlComando)
     resultado = cursor.fetchall()
     return resultado
 
-def insertUsuario(dados):
-    sqlComando = "INSERT INTO Usuario VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    cursor.execute(sqlComando,dados)
-    conexao.commit()
-    return
-
-def execucao(userResp):
-    # Consulta Tabela
-    if (userResp == 1):
-        retorno = consultaTabela('Usuario')
-        for i in retorno:
-            print(i)
-        return 
+def insertUsuario():
+    pk_cpf = str(randint(1,1000))
+    idade = str(randint(1,100))
     
-    #Insert um usuario
-    dados = []
-    print("Informe: CPF, Nome, Sobrenome, Login, Senha, Rua, CEP, Numero, Bairro, Email, Idade")
-    for i in range(11):
-        info = input()
-        dados.append(info)
 
-    insertUsuario(dados)
-    print("Usuario cadastrado com sucesso")
-    return
+    dados = (
+        pk_cpf,
+        'nomeTeste',
+        'sobrenomeTeste',
+        'loginTeste',
+        'senhaTeste',
+        'ruaTeste',
+        'cepTeste',
+        'numeroTeste',
+        'bairroTeste',
+        'emailTeste@gmail', 
+        idade
+    )
+
+    sqlComando = "INSERT INTO Usuario VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
 
-while True:
-    userResp = int(input("\nQual operacao voce deseja fazer?:\n1.SELECT\n2.INSERT\n3.Sair\n"))
-    if (userResp == 3):
-        break
+    try:
+        cursor.execute(sqlComando,dados)
+        conexao.commit()
+        print(f"Usuario com cpf {dados[0]} inserido com sucesso!\n\n")
+        return
+    except mysql.connector.errors.IntegrityError:
+        print("CPF já cadastrado. Tente novamente!\n\n")
+        return
 
-    execucao(userResp)
+
+insertUsuario()
+for i in consultaTabela("Usuario"):
+    print(i)
 
 
 cursor.close()

@@ -11,7 +11,6 @@ conexao = mysql.connector.connect(
 
 cursor = conexao.cursor()
 
-
 def consultaTabela(tabela):
     sqlComando = f"SELECT * FROM {tabela}"
     cursor.execute(sqlComando)
@@ -20,10 +19,10 @@ def consultaTabela(tabela):
 
 def insertUsuario():
     pk_cpf = str(randint(1,1000))
-    idade = str(randint(1,100))
+    idade = randint(1,100)
+    numero = randint(1,500)
     
-
-    dados = (
+    dados = [
         pk_cpf,
         'nomeTeste',
         'sobrenomeTeste',
@@ -31,29 +30,25 @@ def insertUsuario():
         'senhaTeste',
         'ruaTeste',
         'cepTeste',
-        'numeroTeste',
+        numero,
         'bairroTeste',
         'emailTeste@gmail', 
         idade
-    )
-
-    sqlComando = "INSERT INTO Usuario VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-
-
+    ]
+        
     try:
+        sqlComando = "INSERT INTO Usuario VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         cursor.execute(sqlComando,dados)
         conexao.commit()
-        print(f"Usuario com cpf {dados[0]} inserido com sucesso!\n\n")
+        print(f"Usuario com CPF |{pk_cpf}| inserido com sucesso!\n\n")
         return
     except mysql.connector.errors.IntegrityError:
-        print("CPF já cadastrado. Tente novamente!\n\n")
+        print(f"CPF |{pk_cpf}| já cadastrado. Tente novamente!\n\n")
         return
 
-
 insertUsuario()
-for i in consultaTabela("Usuario"):
-    print(i)
-
+for linha in consultaTabela("Usuario"):
+    print(linha)
 
 cursor.close()
 conexao.close()

@@ -1,5 +1,6 @@
 import crud_Usuario
 import crud_Usuario_Admin
+import crud_Leilao
 from imports import *
 
 if __name__ == '__main__':

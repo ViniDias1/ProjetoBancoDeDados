@@ -1,13 +1,5 @@
-from datetime import timedelta
-from imports import *
 
-def serialize_timedelta(td):
-    # Converte o timedelta em uma string no formato 'dias, horas:minutos:segundos'
-    seconds = td.total_seconds()
-    days, seconds = divmod(seconds, 86400)
-    hours, seconds = divmod(seconds, 3600)
-    minutes, seconds = divmod(seconds, 60)
-    return f"{hours}:{minutes}"
+from imports import *
 
 @app.route('/create_Leilao', methods=['POST'])
 def create_Leilao():

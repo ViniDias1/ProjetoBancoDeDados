@@ -52,7 +52,17 @@ def update_Cargo_Usuario_Admin(cpf):
 	# VERIFICAR SE O CARGO MUDOU 
 
 	cursor = conexao.cursor()
+	select_cargo_alterar = cursor.execute(f"SELECT cargo FROM Administrador WHERE cpf_administrador = {cpf}")
+	cargo_alterar = cursor.fetchall()
 	novo_cargo = cargos[randint(0,4)]
+	while True:
+		if novo_cargo == cargo_alterar:
+			novo_cargo = cargos[randint(0,4)]
+		else:
+			break
+
+		
+
 	sql = f"UPDATE Administrador SET cargo = '{novo_cargo}' WHERE cpf_administrador = {cpf}"
 	cursor.execute(sql)
 	conexao.commit()
@@ -69,3 +79,4 @@ def delete_Usuario_Admin(cpf):
 	conexao.commit()
 	cursor.close()
 	return make_response("Usuario deletado!")
+

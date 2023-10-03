@@ -1,90 +1,105 @@
+
 from imports import *
 
-@app.route('/create_Gerencia_Leilao/<int:cpf_admin>/<int:idLeilao>', methods=['POST'])
-def create_Gerencia_Leilao(cpf_admin,idLeilao):
+@app.route('/create_Leilao', methods=['POST'])
+def create_Leilao():
 
 	cursor = conexao.cursor()
-	
+	organizador = randint(1,20)
 	dia = randint(1,30)
 	mes = randint(1,12)
-	hora_operacao = randint(7,19)
-	minutos_operacao = randint(0,59)
-	
-	select_cargo = f"SELECT cargo FROM Administrador WHERE cpf_administrador = {cpf_admin}"
-	cursor.execute(select_cargo)
-	select_cargo = cursor.fetchone()
-	
-	sql = f"INSERT INTO Gerencia_Leilao VALUES (NULL,'{cpf_admin}',{idLeilao},'{cargos_funcao[select_cargo[0]]}','2023-{mes}-{dia} {hora_operacao}:{minutos_operacao}:00')"
-	
+	horario_inicio = randint(12,15)
+	quantidade_lotes = randint(10,25)
+
+	sql = f"INSERT INTO Leilao VALUES (NULL,'2023-{mes}-{dia}','{horario_inicio}:00','{horario_inicio+3}:00',{quantidade_lotes},'organizador{organizador}')"
 	cursor.execute(sql)
+
 	conexao.commit()
 	cursor.close()
 	return make_response("Cadastro Realizado!")
 
-@app.route('/selectAll_Gerencia_Leilao', methods=['GET'])
-def selectAll_Gerencia_Leilao():
+@app.route('/selectAll_Leilao', methods=['GET'])
+def selectAll_Leilao():
 
 	cursor = conexao.cursor()
-
-	sql = "SELECT * FROM Gerencia_Leilao;"
+	sql = "SELECT * FROM Leilao;"
 	cursor.execute(sql)
 
 	resposta = cursor.fetchall()
 	cursor.close()
-	leilao_gerenciado = []
+
+	leiloes = []
 	for row in resposta:
 		leilao = {
-                "idGerencia_Leilao": row[0],
-                "cpf_admin": row[1],
-                "idLeilao": row[2],
-                "tipo_operacao": row[3],
-                "data_horario_operacao": str(row[4])
+                "id": row[0],
+                "data": row[1],
+                "horario_inicio": str(row[2]),
+                "horario_fim": str(row[3]),
+                "quantidade_lotes": row[4],
+                "organizador": row[5]
         }
-		leilao_gerenciado.append(leilao)
+		leiloes.append(leilao)
 	
 	return make_response(
 		jsonify(
-			dados=leilao_gerenciado
+			dados=leiloes
 		)
 	)
 
-@app.route('/selectGerencia_Leilao/Admin/<int:cpf>', methods=['GET'])
-def selectGerencia_Leilao_Admin(cpf):
+@app.route('/select_Leilao/<int:idLeilao>', methods=['GET'])
+def select_Leilao_id(idLeilao):
 
 	cursor = conexao.cursor()
 
-	sql = f"SELECT * FROM Gerencia_Leilao WHERE idGerencia_Leilao = {cpf}"
+	sql = f"SELECT * FROM Leilao WHERE idLeilao = {idLeilao};"
 	cursor.execute(sql)
 
 	resposta = cursor.fetchall()
 	cursor.close()
+
+	leiloes = []
+	for row in resposta:
+		leilao = {
+                "id": row[0],
+                "data": row[1],
+                "horario_inicio": str(row[2]),
+                "horario_fim": str(row[3]),
+                "quantidade_lotes": row[4],
+                "organizador": row[5]
+        }
+		leiloes.append(leilao)
+	
 	return make_response(
 		jsonify(
-			dados = resposta
+			dados=leiloes
 		)
 	)
 
-@app.route('/update_idLeilao_Gerencia_Leilao/<int:cpf_admin>/<int:idLeilao>', methods=['PUT'])
-def update_idLeilao_Gerencia_Leilao(idLeilao,cpf_admin):
 
+@app.route('/update_Quant_Lotes/<int:idLeilao>/<int:quantidade_lotes>', methods=['PUT'])
+def update_Quant_Lotes_id(idLeilao,quantidade_lotes):
+
+	if (quantidade_lotes < 10 or quantidade_lotes > 25):
+		return make_response("O minimo de lotes possível é 10 e no máximo 25. Tente novamente!")
+	
 	cursor = conexao.cursor()
 
-	sql = f"UPDATE Gerencia_Leilao SET idLeilao_gerencia = '{idLeilao}' WHERE Administrador_cpf_administrador = {cpf_admin}"
+	sql = f"UPDATE Leilao SET quantidade_lotes = '{quantidade_lotes}' WHERE idLeilao = {idLeilao}"
 	cursor.execute(sql)
 
 	conexao.commit()
 	cursor.close()
-	return make_response("Id do Leilao Alterado!")
+	return make_response("Quantidade de Lotes Alterado !")
 
 
-@app.route('/delete_Gerencia_Leilao/<int:idLeilao>', methods=['DELETE'])
-def delete_Gerencia_Leilao(idLeilao):
+@app.route('/delete_Leilao/<int:idLeilao>', methods=['DELETE'])
+def delete_Leilao_id(idLeilao):
 
 	cursor = conexao.cursor()
 
-	sql = f"DELETE FROM Gerencia_Leilao WHERE idLeilao_gerencia = {idLeilao}"
+	sql = f"DELETE FROM Leilao WHERE idLeilao = {idLeilao}"
 	cursor.execute(sql)
 
 	conexao.commit()
 	cursor.close()
-	return make_response("Deletado!")
+	return make_response("Leilao deletado!")
